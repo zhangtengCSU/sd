@@ -4,28 +4,30 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 @TableName("t_idea_reply")
 public class IdeaReply {
 
-    @TableField("reply_id")
+    @TableId("reply_id")
     private String replyId;
 
-    @TableId("idea_id")
+    @TableField("idea_id")
     private String ideaId;
 
     @TableField("reply_author")
     private String replyAuthor;
 
-    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    @TableField(value = "create_time")
     private String createTime;
 
-    @TableField("object_id")
-    private String objectId;
+    @TableField("reply_content")
+    private String reply_content;
 
 
 }

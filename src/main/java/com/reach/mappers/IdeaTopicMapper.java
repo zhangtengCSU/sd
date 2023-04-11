@@ -1,7 +1,7 @@
 package com.reach.mappers;
 
-import com.reach.os.idea.domain.po.IdeaTopic;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.reach.os.idea.domain.po.IdeaTopic;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

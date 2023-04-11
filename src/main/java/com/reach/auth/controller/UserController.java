@@ -8,6 +8,7 @@ import com.reach.auth.domain.req.RegisterReq;
 import com.reach.auth.service.UserService;
 import com.reach.common.BaseController;
 import com.reach.common.response.ReachResponse;
+import com.reach.common.response.ResponseEnum;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -61,8 +62,8 @@ public class UserController extends BaseController {
 
     @ApiOperation("test")
     @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public ReachResponse<String> test() {
-        return ReachResponse.SUCCEED("Hello world!").build();
+    public ReachResponse<ResponseEnum> test() {
+        return ReachResponse.SUCCEED(ResponseEnum.SUCCESS).build();
     }
 
 }

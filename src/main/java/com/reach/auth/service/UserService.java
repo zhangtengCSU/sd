@@ -16,5 +16,9 @@ public interface UserService extends IService<UserPO> {
 
     UserPO findUserByUserName(String userName);
 
+    String findUserNameById(String userId);
+
     UserPO addUser(String publicKey,String userName);
+
+    void ifAuth(String token);
 }

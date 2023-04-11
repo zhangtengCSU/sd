@@ -4,12 +4,22 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * <p>
+ * 
+ * </p>
+ *
+ * @author rookie
+ * @since 2023-04-11 09:51:11
+ */
 @Getter
 @Setter
 @TableName("t_idea_topic")
+@Builder
 public class IdeaTopic {
 
     @TableId("idea_id")
@@ -21,11 +31,15 @@ public class IdeaTopic {
     @TableField("idea_title")
     private String ideaTitle;
 
-    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    @TableField("idea_content")
+    private String ideaContent;
+
+    @TableField("tags")
+    private String tags;
+
+    @TableField(value = "create_time")
     private String createTime;
 
-    @TableField("object_id")
-    private String objectId;
 
 
 }
