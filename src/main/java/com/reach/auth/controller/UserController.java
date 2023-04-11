@@ -1,5 +1,6 @@
 package com.reach.auth.controller;
 
+import com.reach.auth.domain.LogoUploadBO;
 import com.reach.auth.domain.po.UserPO;
 import com.reach.auth.domain.vo.LoginVO;
 import com.reach.auth.domain.vo.RegisterVO;
@@ -13,10 +14,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.annotation.Resource;
 
@@ -58,6 +57,13 @@ public class UserController extends BaseController {
 
     private RegisterVO doRegister(RegisterReq req) {
         return userService.register(req.getPublic_key(), req.getUser_name());
+    }
+
+    @ApiOperation("Upload-User-Logo")
+    @RequestMapping(value = "/logo", method = RequestMethod.POST)
+    public ReachResponse<String> uploadLogo(@RequestParam("file") CommonsMultipartFile file,@RequestParam("userId") String userId) {
+        LogoUploadBO uploadBO = LogoUploadBO.builder().file(file).userId(userId).build();
+        return dealWithException(uploadBO, userService::uploadLogo, "User-Register");
     }
 
     @ApiOperation("test")

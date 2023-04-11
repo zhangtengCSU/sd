@@ -6,7 +6,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.reach.auth.domain.ClaimType;
+import com.reach.auth.domain.ImageTypeEnum;
+import com.reach.auth.domain.LogoUploadBO;
 import com.reach.auth.domain.po.UserPO;
 import com.reach.auth.domain.vo.LoginVO;
 import com.reach.auth.domain.vo.RegisterVO;
@@ -17,9 +20,11 @@ import com.reach.common.response.ResponseEnum;
 import com.reach.common.utils.IdUtil;
 import com.reach.common.utils.JwtUtil;
 import com.reach.common.utils.RedisUtil;
+import com.reach.common.utils.S3Util;
 import com.reach.mappers.UserMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.util.Objects;
 
@@ -65,17 +70,31 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
             throw ReachException.build(ResponseEnum.USER_HAS_BEEN_REGISTERED);
         }
         // generate username suffix
-        String username = generateUsernameSuffix(userName);
+        String generatedName = generateUsernameSuffix(userName);
         // save user info
-        UserPO userPO = addUser(publicKey, userName);
+        UserPO userPO = addUser(publicKey, generatedName);
         return RegisterVO
                 .builder()
                 .user_id(userPO.getUserId())
-                .user_name(username)
+                .user_name(generatedName)
                 .user_public_key(userPO.getPublicKey())
                 .logo(userPO.getLogo())
                 .token(auth(userPO.getPublicKey()))
                 .build();
+    }
+
+    @Override
+    public String uploadLogo(LogoUploadBO bo) {
+        String prefix = "suidemo";
+        String logoPath = S3Util.uploadToS3(bo.getFile(), prefix, ImageTypeEnum.USER.getDesc());
+        if (!this.update(new UpdateWrapper<UserPO>()
+                .lambda()
+                .eq(UserPO::getUserId,bo.getUserId())
+                .set(UserPO::getLogo, logoPath))
+        ) {
+            throw ReachException.build(ResponseEnum.UPLOAD_TO_S3_ERROR);
+        }
+        return logoPath;
     }
 
     @Override

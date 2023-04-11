@@ -24,7 +24,11 @@ public enum ResponseEnum {
     @ApiModelProperty("The token was expired")
     TOKEN_EXPIRED(401,"The token was expired"),
     @ApiModelProperty("The token is wrong")
-    TOKEN_ERROR(402,"The token is wrong")
+    TOKEN_ERROR(402,"The token is wrong"),
+
+    UPLOAD_TO_S3_ERROR(501,"Failed to upload logo"),
+
+    OPTIMISTIC_LOCK_EXCEPTION(601,"Failed because Optimistic Lock")
     ;
 
 
