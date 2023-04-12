@@ -40,7 +40,7 @@ public class OrganizationManageController {
             @ApiImplicitParam(name = "file", value = "file from data"),
             @ApiImplicitParam(name = "imageType", value = "file type: 0-organization,1-user,2-normal,3-asset,here should be 0"),
     })
-    public ReachResponse<String> uploadPic(@RequestParam("file") CommonsMultipartFile file, @RequestParam("relatedId") String relatedId, @RequestParam("userId") String userId) {
+    public ReachResponse<String> uploadPic(@RequestParam("file") CommonsMultipartFile file, @RequestParam("relatedId") String relatedId, @RequestParam("imageType") Integer imageType, @RequestParam("userId") String userId) {
         return ReachResponse.SUCCEED(organizationManager.uploadImage(file, relatedId, userId)).build();
     }
 
