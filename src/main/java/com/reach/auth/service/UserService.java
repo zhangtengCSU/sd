@@ -7,6 +7,8 @@ import com.reach.auth.domain.vo.LoginVO;
 import com.reach.auth.domain.vo.RegisterVO;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.util.List;
+
 public interface UserService extends IService<UserPO> {
     String auth(String pk);
 
@@ -25,4 +27,8 @@ public interface UserService extends IService<UserPO> {
     void ifAuth(String token);
 
     String uploadLogo(LogoUploadBO bo);
+
+    List<UserPO> findUserByIds(List<String> userIds);
+
+    UserPO findUserById(String userId);
 }

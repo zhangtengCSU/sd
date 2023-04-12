@@ -1,5 +1,6 @@
 package com.reach.auth.service.serviceImpl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -26,6 +27,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -110,7 +112,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
                 .userId(id)
                 .userName(userName)
                 .publicKey(publicKey)
-                .logo("logo")
+                .logo("azeroth/2022/materials/85cbe56daf074690a8b1898b819107c2.png")
                 .build();
         this.save(build);
         return build;
@@ -185,5 +187,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserPO> implements 
         } catch (Exception e) {
             throw ReachException.build(ResponseEnum.TOKEN_ERROR);
         }
+    }
+
+    @Override
+    public List<UserPO> findUserByIds(List<String> userIds) {
+        return this.listByIds(userIds);
+    }
+
+    @Override
+    public UserPO findUserById(String userId) {
+        return this.getById(userId);
     }
 }
