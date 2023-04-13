@@ -18,9 +18,4 @@ public class WebConfigure implements WebMvcConfigurer {
         configurer.setUseSuffixPatternMatch(true);
         configurer.setUseTrailingSlashMatch(true);
     }
-
-    @Bean(name="multipartResolver")
-    public MultipartResolver multipartResolver(){
-        return new CommonsMultipartResolver();
-    }
 }
